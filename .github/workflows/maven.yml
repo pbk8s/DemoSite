@@ -4,7 +4,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: CI/CD with Maven
 
 on:
   push:
@@ -31,7 +31,21 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: artifact
-        path: target/1.0.0-SNAPSHOT.jar
+        path: /home/azureuser/.m2/repository/com/mycompany-community/boot-community-demo-site/1.0.0-SNAPSHOT/boot-community-demo-site-1.0.0-SNAPSHOT.jar
+
+  deploy:
+
+    needs: build
+
+      steps:
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: cicddemopb
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: /home/azureuser/.m2/repository/com/mycompany-community/boot-community-demo-site/1.0.0-SNAPSHOT/boot-community-demo-site-1.0.0-SNAPSHOT.jar
+
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
