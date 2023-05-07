@@ -31,9 +31,8 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
-    steps:
-      run: cd site
-      run: mvn spring-boot:run
+    run: cd site
+    run: mvn spring-boot:run
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
