@@ -32,7 +32,6 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v3
     - name: Go to site
       run: cd site
     - name: run the workflow
