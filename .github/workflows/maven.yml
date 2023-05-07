@@ -31,8 +31,12 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
-    run: cd site
-    run: mvn spring-boot:run
+    steps:
+    - uses: actions/checkout@v3
+    - name: Go to site
+      run: cd site
+    - name: run the workflow
+      run: mvn spring-boot:run
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
