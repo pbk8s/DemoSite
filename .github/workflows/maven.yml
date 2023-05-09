@@ -39,22 +39,24 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-
-      with:
-      name: artifact
-      uses: einaregilsson/beanstalk-deploy@v21
-      with:
-       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-       aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
-       use_existing_version_if_available: false
-       application_name: demosite
-       environment_name: demosite-env
-       version_label: ${{github.SHA}}
-       region: us-east-1
-       deployment_package: boot-community-demo-site-1.0.0-SNAPSHOT.jar
+      - name: Download JAR
+        #Download the artifact which was uploaded in the build's job
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+      #Deploy the artifact (JAR) into AWS Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
+          use_existing_version_if_available: false
+          application_name: spring-boot-deploy
+          environment_name: Springbootdeploy-env
+          version_label: ${{github.SHA}}
+          region: us-east-1
+          deployment_package: boot-community-demo-site-1.0.0-SNAPSHOT.jar
 
 
     
